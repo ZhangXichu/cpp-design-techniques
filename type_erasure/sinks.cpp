@@ -9,11 +9,11 @@ FileSink::FileSink(std::filesystem::path path)
 
 void ConsoleSink::log(LogLevel level, std::string_view message)
 {
-    std::cout << message << std::endl;
+    std::cout << '[' << to_string(level) << "] " << message << std::endl;
 }
 
 void FileSink::log(LogLevel level, std::string_view message)
 {
     std::ofstream file(m_path);
-    file << message << std::endl;
+    file << '[' << to_string(level) << "] " << message << std::endl;
 }

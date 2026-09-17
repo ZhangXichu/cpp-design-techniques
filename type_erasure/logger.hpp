@@ -4,7 +4,7 @@
 #include <memory>
 #include <utility>
 
-#include "sinks.hpp"
+#include "log_level.hpp"
 
 class LoggerBase {
 public:
@@ -43,11 +43,13 @@ class Logger
 {
 public:
     template <SinkConcept Sink>
-    Logger(Sink sink)
-        : m_logger(std::make_unique<LoggerWrpper<Sink>>(std::move(sink))) {}
+    Logger(Sink sink, LogLevel min_level = LogLevel::Debug)
+        : m_logger(std::make_unique<LoggerWrpper<Sink>>(std::move(sink)))
+        , m_min_level(min_level) {}
 
     Logger(const Logger& other)
-        : m_logger(other.m_logger ? other.m_logger->clone() : nullptr) {}
+        : m_logger(other.m_logger ? other.m_logger->clone() : nullptr)
+        , m_min_level(other.m_min_level) {}
 
     Logger(Logger&&) noexcept = default;
 
@@ -62,8 +64,11 @@ public:
 
     void log(LogLevel level, std::string_view message) const
     {
-        m_logger->log(level, message);
+        if (level >= m_min_level) {
+            m_logger->log(level, message);
+        }
     }
 private:
     std::unique_ptr<LoggerBase> m_logger;
+    LogLevel m_min_level;
 };
