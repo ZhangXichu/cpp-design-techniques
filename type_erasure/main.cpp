@@ -6,14 +6,14 @@ int main()
 {
     Logger logger{ConsoleSink{}};
 
-    logger.log(LogLevel::info, "Application started");
-    logger.log(LogLevel::error, "Configuration file not found");
+    logger.log(LogLevel::Info, "Application started");
+    logger.log(LogLevel::Error, "Configuration file not found");
 
     // A different, unrelated type can be stored in the same Logger.
     logger = Logger{FileSink{"application.log"}};
 
-    logger.log(LogLevel::info, "Switched to file logging");
-    logger.log(LogLevel::error, "Connection failed");
+    logger.log(LogLevel::Info, "Switched to file logging");
+    logger.log(LogLevel::Error, "Connection failed");
 
     return 0;
 }

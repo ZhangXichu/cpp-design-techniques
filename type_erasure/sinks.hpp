@@ -9,8 +9,12 @@ struct ConsoleSink {
     void log(LogLevel level, std::string_view message);
 };
 
-struct FileSink {
+class FileSink {
+public:
     explicit FileSink(std::filesystem::path path);
 
     void log(LogLevel level, std::string_view message);
+
+private:
+    std::filesystem::path m_path;
 };
