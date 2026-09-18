@@ -15,6 +15,7 @@ int main()
 
     logger.log(LogLevel::Info, "Switched to file logging");
     logger.log(LogLevel::Error, "Connection failed");
+    logger.log(LogLevel::Error, "Retrying connection");
 
     return 0;
 }

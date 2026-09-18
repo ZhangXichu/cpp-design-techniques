@@ -14,6 +14,6 @@ void ConsoleSink::log(LogLevel level, std::string_view message)
 
 void FileSink::log(LogLevel level, std::string_view message)
 {
-    std::ofstream file(m_path);
+    std::ofstream file(m_path, std::ios::app);
     file << '[' << to_string(level) << "] " << message << std::endl;
 }
